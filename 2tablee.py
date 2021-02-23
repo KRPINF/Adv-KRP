@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 #Staff Class/Model
-class KPOPs(db.Model):
+class Staffs(db.Model):
     id = db.Column(db.String(13), primary_key=True, unique=True)
     name = db.Column(db.String(50))
     type = db.Column(db.String(25))
@@ -39,20 +39,20 @@ staffs_schema = StaffSchema(many=True)
 # Get All Staffs
 @app.route('/staffs', methods=['GET'])
 def get_staffs():
-    all_staffs = KPOPs.query.all()
+    all_staffs = Staffs.query.all()
     result = staffs_schema.dump(all_staffs)
     return jsonify(result)
 
 # Get Single Staff
 @app.route('/staff/<id>', methods=['GET'])
 def get_staff(id):
-    staff = KPOPs.query.get(id)
+    staff = Staffs.query.get(id)
     return staff_schema.jsonify(staff)
 
 # Update a Staff
 @app.route('/staff/<id>', methods=['PUT'])
 def update_staff(id):
-    staff = KPOPs.query.get(id)
+    staff = Staffs.query.get(id)
     
     name = request.json['name']
     email = request.json['type']
@@ -69,7 +69,7 @@ def update_staff(id):
 # Delete Staff
 @app.route('/staff/<id>', methods=['DELETE'])
 def delete_staff(id):
-    staff = KPOPs.query.get(id)
+    staff = Staffs.query.get(id)
     db.session.delete(staff)
     db.session.commit()
     
