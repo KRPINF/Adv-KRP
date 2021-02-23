@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 #Database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:TPPndo33441@node8604-advweb-20.app.ruk-com.cloud:11096/CloudDB'
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:TPPndo33441@10.100.2.200:5432/CloudDB'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://webadmin:TPPndo33441@10.100.2.200:5432/CloudDB'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 #Init DB
 db = SQLAlchemy(app)
@@ -15,19 +15,19 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
 #Staff Class/Model
-class KPOPs(db.Model):
-    id = db.Column(db.String(20), primary_key=True, unique=True)
+class Staffs(db.Model):
+    id = db.Column(db.String(13), primary_key=True, unique=True)
     name = db.Column(db.String(50))
     type = db.Column(db.String(25))
-    company = db.Column(db.String(20))
+    company = db.Column(db.String(10))
     
     def __init__(self, id, name, type, company):
         self.id = id
         self.name = name
         self.type = type
         self.company = company
-
-# Staff Schema
+        
+    # Staff Schema
 class StaffSchema(ma.Schema):
     class Meta:
         fields =('id', 'name', 'type', 'company')
@@ -37,12 +37,12 @@ staff_schema = StaffSchema()
 staffs_schema = StaffSchema(many=True)
 
 # Get All Staffs
-@app.route('/KPOPs', methods=['GET'])
+@app.route('/staffs', methods=['GET'])
 def get_staffs():
-    all_staffs = KPOPs.query.all()
+    all_staffs = Staffs.query.all()
     result = staffs_schema.dump(all_staffs)
     return jsonify(result)
-    
+
 # Get Single Staff
 @app.route('/staff/<id>', methods=['GET'])
 def get_staff(id):
