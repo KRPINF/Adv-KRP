@@ -55,8 +55,8 @@ def update_staff(id):
     staff = Staffs.query.get(id)
     
     name = request.json['name']
-    email = request.json['email']
-    phone = request.json['phone']
+    email = request.json['type']
+    phone = request.json['company']
 
     staff.name = name
     staff.email = email
@@ -78,10 +78,10 @@ def delete_staff(id):
 # Web Root Hello
 @app.route('/', methods=['GET'])
 def get():
-    return jsonify({'ms': 'Hello Cloud DB1'})
+    return jsonify({'ms': 'TEST KPOP'})
 # Run Server
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=81)
+    app.run(host='0.0.0.0', port=80)
 
 
     
